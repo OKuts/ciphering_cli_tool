@@ -1,5 +1,9 @@
+const isDoubleParams = require('./isDoubleParams');
+
 const getParams = (args) => {
   if (!args.length) return {errorMessage: 'inputdata empty'};
+  if (args.length !== [...new Set(args)].length) return {errorMessage: 'double arguments'};
+
   const commandLine = {};
   let key;
   let temp;
@@ -17,6 +21,7 @@ const getParams = (args) => {
   })
   if (!Object.getOwnPropertyNames(commandLine).length) return {errorMessage: 'error data format'};
   if (!commandLine.c && !commandLine.config) return {errorMessage: 'no correct config'};
+  if (isDoubleParams(commandLine)) return {errorMessage: 'double arguments'};
 
   return commandLine;
 }

@@ -1,5 +1,4 @@
 const atbash_cipher = (data) => {
-  console.log(data);
   const result = data.split('').reduce((out, leter) => {
     if (/[a-zA-Z]/.test(leter)) {
       const char = leter.charCodeAt();
@@ -10,7 +9,6 @@ const atbash_cipher = (data) => {
     }
   }, '');
 
-  console.log(result);
   return result;
 }
 
