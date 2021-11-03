@@ -15,10 +15,10 @@ const isCiphering = () => {
   const configData = getConfigData(filteredParams);
   if (typeof configData === 'string') return configData;
 
-  const inputData = 'hello';
+  const inputData = 'A5he_lloz';
   const outData = encrypt(configData, inputData);
 
-  console.log(outData)
+  // console.log(outData)
 
   return false;
 }

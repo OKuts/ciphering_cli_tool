@@ -1,5 +1,5 @@
 const atbash_cipher = (data, key) => {
-  return data + 'a2';
+  return data;
 }
 
 module.exports = atbash_cipher;

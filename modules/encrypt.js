@@ -7,7 +7,7 @@ const encript = (keys, inputData) => {
   keys.forEach(key => {
     switch (key[0]) {
       case 'C':
-        result = caesar_cipher(result, key);
+        result = caesar_cipher(result, key[1]);
         break;
       case 'A':
         result = atbash_cipher(result);
