@@ -1,15 +1,13 @@
+const fs = require('fs');
 const getParams = require('./modules/getParams');
 const encrypt = require('./modules/encrypt');
 const getConfigData = require('./modules/getConfigData');
 const getFilteredParams = require('./modules/getFilteredParams');
-const getInputData = require('./modules/getInputData');
-const saveOutData = require('./modules/saveOutData');
 
 const argv = process.argv.slice(2);
 
-const isCiphering = () => {
-
-  const params = getParams(argv);
+const cipher = async (arg) => {
+  const params = getParams(arg);
   if (params.errorMessage) return params.errorMessage;
 
   const filteredParams = getFilteredParams(params);
@@ -17,20 +15,25 @@ const isCiphering = () => {
   const configData = getConfigData(filteredParams);
   if (typeof configData === 'string') return configData;
 
-  const inputData = getInputData(filteredParams.i);
-  if (!inputData) return 'Input file not found';
+  const readStream = fs.createReadStream(filteredParams.i, 'utf8');
+  const writeStream = fs.createWriteStream(filteredParams.o, {'flags': 'a'});
 
-  const outData = encrypt(configData, inputData);
-
-  const isSaveSuccess = saveOutData(outData, filteredParams.o)
-  if (!isSaveSuccess) return 'File not exist';
-
-  console.log(inputData)
-  console.log(outData)
-  return false;
+  readStream
+    .on('data', chunk => {
+    if (chunk) {
+      const outData = encrypt(configData, chunk);
+      writeStream.write(outData)
+    }
+  })
+    .on('error', function(err) {
+      return err.message;
+  });
 }
 
-const error = isCiphering(argv);
-
-console.log(12, error ? error : 'Success ');
-
+cipher(argv).then(data => {
+  if (data) {
+    console.error(data)
+  } else {
+    console.log('Success')
+  }
+});
