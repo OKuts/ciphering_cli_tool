@@ -1,8 +1,9 @@
 const isDoubleParams = require('./isDoubleParams');
 
-const getParams = (args) => {
-  if (!args.length) return {errorMessage: 'inputdata empty'};
-  if (args.length !== [...new Set(args)].length) return {errorMessage: 'double arguments'};
+const getParams = args => {
+  if (!args.length) return {errorMessage: 'ERROR: input is empty', cod: 1};
+  if (args.length !== [...new Set(args)].length) return {errorMessage: 'ERROR: arguments are duplicated', cod: 4};
+  if (args.length % 2) return {errorMessage: 'ERROR: config data is not complete', cod: 2};
 
   const commandLine = {};
   let key;
@@ -19,9 +20,11 @@ const getParams = (args) => {
       key = null;
     }
   })
-  if (!Object.getOwnPropertyNames(commandLine).length) return {errorMessage: 'error data format'};
-  if (!commandLine.c && !commandLine.config) return {errorMessage: 'no correct config'};
-  if (isDoubleParams(commandLine)) return {errorMessage: 'double arguments'};
+
+  if (!Object.getOwnPropertyNames(commandLine).length)
+    return {errorMessage: 'ERROR: config data is not complete', cod: 3};
+  if (!commandLine.c && !commandLine.config) return {errorMessage: 'ERROR: config data is not correct', cod: 5};
+  if (isDoubleParams(commandLine)) return {errorMessage: 'ERROR: arguments are duplicated', cod: 4};
 
   return commandLine;
 }

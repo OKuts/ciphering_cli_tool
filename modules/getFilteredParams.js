@@ -1,9 +1,9 @@
 const getFilteredParams = (params) => {
 
   return {
-    c: params.c || params.config,
-    i: params.i || params.input || null,
-    o: params.o || params.output || null,
+    config: params.c || params.config,
+    input: params.i || params.input || null,
+    output: params.o || params.output || null,
   }
 }
 
