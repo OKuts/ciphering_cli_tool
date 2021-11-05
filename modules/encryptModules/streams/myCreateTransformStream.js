@@ -1,6 +1,6 @@
 const Transform = require('stream').Transform;
 
-const createTransformStream = (func, config) => {
+const myCreateTransformStream = (func, config) => {
   return new Transform({
     transform(chunk, encoding, callback) {
       const data = func(config, chunk.toString(),);
@@ -9,5 +9,5 @@ const createTransformStream = (func, config) => {
   });
 }
 
-module.exports = createTransformStream;
+module.exports = myCreateTransformStream;
 

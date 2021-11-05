@@ -1,9 +1,10 @@
 const isDoubleParams = require('./isDoubleParams');
+const processBreak = require('./processBreak');
 
 const getParams = args => {
-  if (!args.length) return {errorMessage: 'ERROR: input is empty', cod: 1};
-  if (args.length !== [...new Set(args)].length) return {errorMessage: 'ERROR: arguments are duplicated', cod: 4};
-  if (args.length % 2) return {errorMessage: 'ERROR: config data is not complete', cod: 2};
+  if (!args.length) processBreak('ERROR: input is empty', 1);
+  if (args.length !== [...new Set(args)].length) processBreak('ERROR: arguments are duplicated', 3);
+  if (args.length % 2) processBreak('ERROR: config data is not complete', 2);
 
   const commandLine = {};
   let key;
@@ -22,9 +23,8 @@ const getParams = args => {
   })
 
   if (!Object.getOwnPropertyNames(commandLine).length)
-    return {errorMessage: 'ERROR: config data is not complete', cod: 3};
-  if (!commandLine.c && !commandLine.config) return {errorMessage: 'ERROR: config data is not correct', cod: 5};
-  if (isDoubleParams(commandLine)) return {errorMessage: 'ERROR: arguments are duplicated', cod: 4};
+    processBreak('ERROR: config data is not complete', 2);
+  if (isDoubleParams(commandLine)) processBreak('ERROR: arguments are duplicated', 4);
 
   return commandLine;
 }
