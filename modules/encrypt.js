@@ -1,5 +1,5 @@
-const atbash_cipher = require('./encryptModules/atbash_cipher');
-const rot8_cipher = require('./encryptModules/rot8_cipher');
+const atbash_cipher = require('./encryptModules/atbashCipher');
+const rot8_cipher = require('./encryptModules/rotCipher');
 
 const encript = (keys, inputData) => {
   let result = inputData;

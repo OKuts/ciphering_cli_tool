@@ -1,40 +1,39 @@
 const fs = require('fs');
+const path = require('path');
 const {pipeline} = require('stream');
 const getParams = require('./modules/getParams');
-const encrypt = require('./modules/encrypt');
 const getConfigData = require('./modules/getConfigData');
 const getFilteredParams = require('./modules/getFilteredParams');
 const processBreak = require('./modules/processBreak');
-// const TransformStream = require('./modules/encryptModules/streams/TransformStream');
-const myCreateTransformStream = require('./modules/encryptModules/streams/myCreateTransformStream');
-const myCreateReadStream = require('./modules/encryptModules/streams/myCreateReadStream');
-const myCreateWriteStream = require('./modules/encryptModules/streams/myCreateWriteStream');
+// const myCreateReadStream = require('./modules/streams/myCreateReadStream');
+// const myCreateWriteStream = require('./modules/streams/myCreateWriteStream');
+const transformStreamsCreator = require('./modules/streams/transformStreamsCreator');
+const MyWriteStream = require('./modules/streams/myWriteStream');
+const MyReadStream = require('./modules/streams/myReadStream');
 
 const argv = process.argv.slice(2);
 
 const applyEncryption = arg => {
 
-  const params = getParams(arg);
-  const filteredParams = getFilteredParams(params);
-  const configData = getConfigData(filteredParams);
+    const params = getParams(arg);
+    const { input, output, config } = getFilteredParams(params);
+    const configData = getConfigData(config);
 
-  try {
-    fs.statSync(filteredParams.output)
-  } catch (err) {
-    processBreak(`ERROR: File ${filteredParams.output} not found`, 6)
-  }
+    fs.stat(output, (err, data) => {
+        if (err || !data.isFile()) processBreak(`ERROR: File ${output} not found`, 6);
 
-  const readStream = myCreateReadStream(filteredParams.input);
-  const transformStream = myCreateTransformStream(encrypt, configData);
-  const writeStream = myCreateWriteStream(filteredParams.output);
+        // const readStream = myCreateReadStream(input);
+        const readStream = input ? new MyReadStream(input) : process.stdin;
+        const transformStreams = transformStreamsCreator(configData);
+        // const writeStream = myCreateWriteStream(output);
+        const writeStream =  output ? new MyWriteStream(path.join(__dirname, output)) : process.stdout;
 
-  pipeline(readStream, transformStream, writeStream, err => {
-      if (err) {
-        processBreak(`ERROR: File ${err.path} not found`, 6);
-      }
-      processBreak('Success', 0);
-    }
-  );
+        pipeline(readStream, ...transformStreams, writeStream, err => {
+                if (err) processBreak(`ERROR: File ${err.path} not found`, 6);
+                processBreak('Success', 0, 'stdout');
+            }
+        );
+    })
 }
 
 applyEncryption(argv);

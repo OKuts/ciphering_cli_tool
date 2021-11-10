@@ -1,6 +1,6 @@
-const processBreak = (msg, cod) => {
-  process.stderr.write(`\n${msg}. (Cod --> ${cod})\n\n`);
-  process.exit(cod);
+const processBreak = (msg, code, std = 'stderr') => {
+  process[std].write(`\n${msg}. (Cod --> ${code})\n\n`);
+  process.exit(code);
 }
 
 module.exports = processBreak;
