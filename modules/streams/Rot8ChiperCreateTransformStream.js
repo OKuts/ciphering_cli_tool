@@ -1,4 +1,4 @@
-const Transform = require('stream').Transform;
+const { Transform } = require('stream');
 
 const Rot8ChiperCreateTransformStream = (func, code) => {
   return new Transform({

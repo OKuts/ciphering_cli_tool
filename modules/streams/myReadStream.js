@@ -8,6 +8,7 @@ class MyReadStream extends Readable {
         this.fd = null;
     }
     _construct(callback) {
+        console.log(this.filename)
         fs.open(this.filename, 'r', (err, fd) => {
             if (err) {
                 callback(err);

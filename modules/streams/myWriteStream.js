@@ -7,7 +7,6 @@ class myWriteStream extends Writable {
         this.filename = filename;
     }
     _construct(callback) {
-        console.log(this.filename);
         fs.open(this.filename, 'a', (err, fd) => {
             if (err) {
                 callback(err);

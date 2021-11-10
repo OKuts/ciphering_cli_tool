@@ -5,8 +5,6 @@ const getParams = require('./modules/getParams');
 const getConfigData = require('./modules/getConfigData');
 const getFilteredParams = require('./modules/getFilteredParams');
 const processBreak = require('./modules/processBreak');
-// const myCreateReadStream = require('./modules/streams/myCreateReadStream');
-// const myCreateWriteStream = require('./modules/streams/myCreateWriteStream');
 const transformStreamsCreator = require('./modules/streams/transformStreamsCreator');
 const MyWriteStream = require('./modules/streams/myWriteStream');
 const MyReadStream = require('./modules/streams/myReadStream');
@@ -22,10 +20,8 @@ const applyEncryption = arg => {
     fs.stat(output, (err, data) => {
         if (err || !data.isFile()) processBreak(`ERROR: File ${output} not found`, 6);
 
-        // const readStream = myCreateReadStream(input);
-        const readStream = input ? new MyReadStream(input) : process.stdin;
-        const transformStreams = transformStreamsCreator(configData);
-        // const writeStream = myCreateWriteStream(output);
+        const readStream = input ? new MyReadStream(path.join(__dirname, input)) : process.stdin;
+        const transformStreams = transformStreamsCreator(configData); // look transformStreamsCreator (3 streams)
         const writeStream =  output ? new MyWriteStream(path.join(__dirname, output)) : process.stdout;
 
         pipeline(readStream, ...transformStreams, writeStream, err => {
