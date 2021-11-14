@@ -1,7 +1,7 @@
-### Welcome! This is a app 
 ##Ciphering CLI Tool! 🚀
-####To run the code type in a terminal: 'node my_ciphering_cli ', after that you can write the encoding according to 
-####the following rules:
+
+To run the code type in a terminal: 'node my_ciphering_cli ', after that you can write the encoding according to 
+the following rules:
 
 ```sh
 1. -c, --config: config for ciphers Config is a string with pattern {XY(-)}n, where:
@@ -29,8 +29,8 @@ Examples:
 3. -o, --output: a path to output file
 ```  
 
-####For example, config "C1-C1-R0-A" means
-####"encode by Caesar cipher => encode by Caesar cipher => decode by ROT-8 => use Atbash"
+For example, config "C1-C1-R0-A" means
+"encode by Caesar cipher => encode by Caesar cipher => decode by ROT-8 => use Atbash"
 
 ```shell
 For example of whole line of config:
