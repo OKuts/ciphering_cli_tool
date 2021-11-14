@@ -1,4 +1,4 @@
-##Ciphering CLI Tool! 🚀
+## Ciphering CLI Tool! 🚀
 
 To run the code type in a terminal: 'node my_ciphering_cli ', after that you can write the encoding according to 
 the following rules:
