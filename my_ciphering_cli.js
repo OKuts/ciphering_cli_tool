@@ -14,22 +14,26 @@ const argv = process.argv.slice(2);
 const applyEncryption = arg => {
 
     const params = getParams(arg);
-    const { input, output, config } = getFilteredParams(params);
+    const {input, output, config} = getFilteredParams(params);
     const configData = getConfigData(config);
 
-    fs.stat(output, (err, data) => {
-        if (err || !data.isFile()) processBreak(`ERROR: File ${output} not found`, 6);
+    if (output) {
+        try {
+            const stat = fs.statSync(output);
+        } catch (e) {
+            processBreak(`ERROR: File ${output} not found`, 6);
+        }
+    }
+    const readStream = input ? new MyReadStream(path.join(__dirname, input)) : process.stdin;
+    const transformStreams = transformStreamsCreator(configData); // look transformStreamsCreator (3 streams)
 
-        const readStream = input ? new MyReadStream(path.join(__dirname, input)) : process.stdin;
-        const transformStreams = transformStreamsCreator(configData); // look transformStreamsCreator (3 streams)
-        const writeStream =  output ? new MyWriteStream(path.join(__dirname, output)) : process.stdout;
+    const writeStream = output ? new MyWriteStream(path.join(__dirname, output)) : process.stdout;
 
-        pipeline(readStream, ...transformStreams, writeStream, err => {
-                if (err) processBreak(`ERROR: File ${err.path} not found`, 6);
-                processBreak('Success', 0, 'stdout');
-            }
-        );
-    })
+    pipeline(readStream, ...transformStreams, writeStream, err => {
+            if (err) processBreak(`ERROR: File ${err.path} not found`, 6);
+            processBreak('Success', 0, 'stdout');
+        }
+    );
 }
 
 applyEncryption(argv);
