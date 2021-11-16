@@ -1,11 +1,9 @@
-const processBreak = require("./processBreak");
-
 const getConfigData = config => {
   const keys = config.split('-');
   const isValid = keys.every(key => /^A$|^[C|R][1|0]$/.test(key));
-  if (!isValid) processBreak('ERROR: config data is not correct', 4);
+  if (!isValid) return {errorCode: 4};
 
-  return keys;
+  return {config: keys};
 }
 
 module.exports = getConfigData;
