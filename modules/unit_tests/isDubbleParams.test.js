@@ -1,28 +1,20 @@
-const getParams = require('../getParams');
+const isDoubleParams = require('../isDoubleParams');
 
-describe('Function getParams', () => {
+describe('Function isDoubleParams', () => {
 
-  test('empty arguments', () => {
-    expect(getParams('').errorCode).toEqual(1);
+  test('checking for not exactly duplicate parameters', () => {
+    const commandLine = {i: 'yes', input: 'no'}
+    expect(isDoubleParams(commandLine)).toBeTruthy();
   })
 
-  test('arguments are exactly duplicated', () => {
-    const args = ['-c', 'C1-C0-A-R1', '-i', './input.txt', '-o', './output.txt', '-i', './input.txt'];
-    expect(getParams(args).errorCode).toEqual(3);
+  test('checking for exactly duplicate parameters', () => {
+    const commandLine = {c: 'yes', config: 'no'}
+    expect(isDoubleParams(commandLine)).toBeTruthy();
   })
 
-  test('arguments are not exactly duplicated', () => {
-    const args = ['-c', 'C1-C0-A-R1', '-i', './input.txt', '-o', './output.txt', '--input', './input.txt'];
-    expect(getParams(args).errorCode).toEqual(3);
+  test('checking for exactly duplicate parameters', () => {
+    const commandLine = {o: 'yes', output: 'no'}
+    expect(isDoubleParams(commandLine)).toBeTruthy();
   })
 
-  test('count of arguments are even', () => {
-    const args = ['-c', 'C1-C0-A-R1', '-i', './input.txt', '-o'];
-    expect(getParams(args).errorCode).toEqual(2);
-  })
-
-  test('return result', () => {
-    const args = ['-c', 'C1-C0-A-R1', '-i', './input.txt'];
-    expect(getParams(args).errorCode).toBeUndefined();
-  })
 })
