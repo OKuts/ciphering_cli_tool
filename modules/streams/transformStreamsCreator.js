@@ -1,6 +1,6 @@
-const AtbashCreateTransformStream = require('./AtbashCreateTransformStream');
-const Rot8ChiperCreateTransformStream = require('./Rot8ChiperCreateTransformStream');
-const CaesarChiperCreateTransformStream = require('./CaesarChiperCreateTransformStream');
+const AtbashCreateTransformStream = require('./atbashCreateTransformStream');
+const Rot8ChiperCreateTransformStream = require('./rot8ChiperCreateTransformStream');
+const CaesarChiperCreateTransformStream = require('./caesarChiperCreateTransformStream');
 const atbashCipher = require('../encryptModules/atbashCipher');
 const rotCipher = require('../encryptModules/rotCipher');
 

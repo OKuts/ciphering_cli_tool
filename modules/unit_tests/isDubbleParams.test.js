@@ -1,4 +1,5 @@
 const isDoubleParams = require('../isDoubleParams');
+const getErrorMessage = require("../getErrorMessage");
 
 describe('Function isDoubleParams', () => {
 
@@ -6,19 +7,12 @@ describe('Function isDoubleParams', () => {
     expect(isDoubleParams).toBeDefined();
   });
 
-  test('checking for not exactly duplicate parameters', () => {
-    const commandLine = {i: 'yes', input: 'no'}
-    expect(isDoubleParams(commandLine)).toBeTruthy();
-  })
-
-  test('checking for exactly duplicate parameters', () => {
-    const commandLine = {c: 'yes', config: 'no'}
-    expect(isDoubleParams(commandLine)).toBeTruthy();
-  })
-
-  test('checking for exactly duplicate parameters', () => {
-    const commandLine = {o: 'yes', output: 'no'}
-    expect(isDoubleParams(commandLine)).toBeTruthy();
-  })
+  test.each([
+    [{i: 'yes', input: 'no'}],
+    [{c: 'yes', config: 'no'}],
+    [{o: 'yes', output: 'no'}],
+  ])('is config data not valid', (data) => {
+    expect(isDoubleParams(data)).toBeTruthy();
+  });
 
 })

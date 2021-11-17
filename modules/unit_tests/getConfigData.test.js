@@ -23,4 +23,18 @@ describe('Function getConfigData', () => {
     ])('is  ROT-8 config data not valid', (data) => {
         expect(getConfigData(data).errorCode).toBe(4);
     });
+
+    test.each([
+        ['A-A-A-R1-R1-R0-R0-C0-C1-A'],
+    ])('return result', (data) => {
+        expect(getConfigData(data).errorCode).toBeUndefined();
+    });
+
+    test.each([
+        [''],
+        [undefined],
+        [null]
+    ])('is config data not valid', (data) => {
+        expect(getConfigData(data).errorCode).toBe(4);
+    });
 })

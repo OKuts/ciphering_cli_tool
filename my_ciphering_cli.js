@@ -23,9 +23,9 @@ const applyEncryption = arg => {
 
     if (output) {
         try {
-            const stat = fs.statSync(output);
+            fs.statSync(output);
         } catch (e) {
-            processBreak(`ERROR: File ${output} not found`, 6);
+            processBreak(getErrorMessage(5, output), 5);
         }
     }
 
@@ -34,8 +34,10 @@ const applyEncryption = arg => {
     const writeStream = output ? new MyWriteStream(path.join(__dirname, output)) : process.stdout;
 
     pipeline(readStream, ...transformStreams, writeStream, err => {
-            if (err) processBreak(`ERROR: File ${err.path} not found`, 6);
-            processBreak('Success', 0, 'stdout');
+            if (err) {
+                processBreak(getErrorMessage(5, err.path), 5);
+            }
+            processBreak('', 0, 'stdout');
         }
     );
 }

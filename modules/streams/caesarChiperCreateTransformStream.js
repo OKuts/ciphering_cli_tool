@@ -1,6 +1,6 @@
 const { Transform } = require('stream');
 
-const CaesarChiperCreateTransformStream = (func, code) => {
+const caesarChiperCreateTransformStream = (func, code) => {
   return new Transform({
     transform(chunk, encoding, callback) {
       const data = func(chunk.toString(), code);
@@ -9,5 +9,5 @@ const CaesarChiperCreateTransformStream = (func, code) => {
   });
 }
 
-module.exports = CaesarChiperCreateTransformStream;
+module.exports = caesarChiperCreateTransformStream;
 
