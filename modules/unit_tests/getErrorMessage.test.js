@@ -1,6 +1,9 @@
 const getErrorMessage = require('../getErrorMessage');
 
 describe('Function getErrorMessage', () => {
+  test('should be defined', () => {
+    expect(getErrorMessage).toBeDefined();
+  });
 
   test('return message if codeError = 1', () => {
     const commandLine = {i: 'yes', input: 'no'}

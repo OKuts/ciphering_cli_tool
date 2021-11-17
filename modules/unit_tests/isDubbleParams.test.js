@@ -2,6 +2,10 @@ const isDoubleParams = require('../isDoubleParams');
 
 describe('Function isDoubleParams', () => {
 
+  test('should be defined', () => {
+    expect(isDoubleParams).toBeDefined();
+  });
+
   test('checking for not exactly duplicate parameters', () => {
     const commandLine = {i: 'yes', input: 'no'}
     expect(isDoubleParams(commandLine)).toBeTruthy();

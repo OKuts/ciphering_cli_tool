@@ -3,6 +3,10 @@ const getFilteredParams = require('../getFilteredParams');
 describe('Function getFilteredParams', () => {
   let params, out;
 
+  test('should be defined', () => {
+    expect(getFilteredParams).toBeDefined();
+  });
+
   test('return object with properties "config", "input", "output"', () => {
     params = { c: 'config', i: 'input', o: 'output'};
     out = { config: 'config', input: 'input', output: 'output'};
