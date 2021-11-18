@@ -9,6 +9,11 @@ const transformStreamsCreator = require('./modules/streams/transformStreamsCreat
 const MyWriteStream = require('./modules/streams/myWriteStream');
 const MyReadStream = require('./modules/streams/myReadStream');
 const getErrorMessage = require("./modules/getErrorMessage");
+const atbashCreateTransformStream = require('./modules/streams/atbashCreateTransformStream');
+const rot8ChiperCreateTransformStream = require('./modules/streams/rot8ChiperCreateTransformStream');
+const caesarChiperCreateTransformStream = require('./modules/streams/caesarChiperCreateTransformStream');
+const atbashCipher = require('./modules/encryptModules/atbashCipher');
+const rotCipher = require('./modules/encryptModules/rotCipher');
 
 const argv = process.argv.slice(2);
 
@@ -29,8 +34,14 @@ const applyEncryption = arg => {
         }
     }
 
+    const creators = [
+        [atbashCreateTransformStream, atbashCipher],
+        [rot8ChiperCreateTransformStream, rotCipher],
+        [caesarChiperCreateTransformStream, rotCipher],
+    ]
+
     const readStream = input ? new MyReadStream(path.join(__dirname, input)) : process.stdin;
-    const transformStreams = transformStreamsCreator(configData.config); // look transformStreamsCreator (3 streams)
+    const transformStreams = transformStreamsCreator(configData.config, creators); // look transformStreamsCreator (3 streams)
     const writeStream = output ? new MyWriteStream(path.join(__dirname, output)) : process.stdout;
 
     pipeline(readStream, ...transformStreams, writeStream, err => {
