@@ -41,14 +41,14 @@ const applyEncryption = arg => {
     ]
 
     const readStream = input ? new MyReadStream(path.join(__dirname, input)) : process.stdin;
-    const transformStreams = transformStreamsCreator(configData.config, creators); // look transformStreamsCreator (3 streams)
+    const transformStreams = transformStreamsCreator(configData.config, creators);
     const writeStream = output ? new MyWriteStream(path.join(__dirname, output)) : process.stdout;
 
     pipeline(readStream, ...transformStreams, writeStream, err => {
             if (err) {
                 processBreak(getErrorMessage(5, err.path), 5);
             }
-            processBreak('', 0, 'stdout');
+            processBreak('', 0);
         }
     );
 }

@@ -1,6 +1,7 @@
-const processBreak = (msg, code, std = 'stderr') => {
-  const add = std !== 'stderr' ? 'Success.' : 'Error:';
-  process[std].write(`\n${add} ${msg} (Cod --> ${code})\n\n`);
+const processBreak = (msg, code) => {
+  const add = code ? 'Error:' : 'Success.';
+  console.log(`\n${add} ${msg} (Cod --> ${code})\n\n`)
+  process[code ? 'stderr' : 'stdout'].write(`\n${add} ${msg} (Cod --> ${code})\n\n`);
   process.exit(code);
 }
 

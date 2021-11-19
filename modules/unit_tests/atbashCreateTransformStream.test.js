@@ -2,11 +2,11 @@ const { Transform } = require('stream');
 const atbashCreateTransformStream = require('../streams/atbashCreateTransformStream');
 
 describe('function atbashCreateTransformStream', () => {
-    let fn;
+    let fn = jest.fn(x => x);
 
-    beforeEach(() => {
-        fn = jest.fn(x => x);
-    })
+    // beforeEach(() => {
+    //     fn = jest.fn(x => x);
+    // })
 
     test('should be defined', () => {
         expect(atbashCreateTransformStream).toBeDefined();

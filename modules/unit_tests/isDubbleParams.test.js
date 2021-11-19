@@ -1,5 +1,4 @@
 const isDoubleParams = require('../isDoubleParams');
-const getErrorMessage = require("../getErrorMessage");
 
 describe('Function isDoubleParams', () => {
 
@@ -14,5 +13,4 @@ describe('Function isDoubleParams', () => {
   ])('is config data not valid', (data) => {
     expect(isDoubleParams(data)).toBeTruthy();
   });
-
 })
