@@ -26,7 +26,6 @@ class MyReadStream extends Readable {
                 this.push(
                     bytesRead > 0 ? buf.slice(0, bytesRead) : null
                 );
-
             }
         });
     }
