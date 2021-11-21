@@ -7,18 +7,6 @@ describe('Function processBreak', () => {
     });
 
     test.each([
-        ['hello', 1],
-        ['hello', 2],
-        ['hello', 3],
-        ['hello', 4],
-        ['hello', 5],
-    ])('close process is right', (data, code) => {
-        const mockExit = jest.spyOn(process, 'exit').mockImplementation(() => {});
-        processBreak(data, code);
-        expect(mockExit).toHaveBeenCalledWith(code);
-    });
-
-    test.each([
         [['hello', 1],'\nError: hello (Cod --> 1)\n\n'],
         [['hello', 2],'\nError: hello (Cod --> 2)\n\n'],
         [['hello', 3],'\nError: hello (Cod --> 3)\n\n'],
@@ -26,8 +14,10 @@ describe('Function processBreak', () => {
         [['hello', 5],'\nError: hello (Cod --> 5)\n\n'],
     ])('error message is right', ([data, code], expected) => {
         const mockWrite= jest.spyOn(process.stderr, 'write').mockImplementation(() => {});
+        const mockExit = jest.spyOn(process, 'exit').mockImplementation(() => {});
         processBreak(data, code);
         expect(mockWrite).toHaveBeenCalledWith(expected);
+        expect(mockExit).toHaveBeenCalledWith(code);
     });
 
     test('success message is right', () => {
