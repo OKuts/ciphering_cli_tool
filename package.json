@@ -1,0 +1,24 @@
+{
+  "name": "ciphering_cli_tool",
+  "version": "1.0.0",
+  "description": "To run the code type in a terminal: 'node my_ciphering_cli ', after that you can write the encoding according to  the following rules:",
+  "main": "my_ciphering_cli.js",
+  "scripts": {
+    "test": "jest",
+    "test:coverage": "jest --coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OKuts/ciphering_cli_tool.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/OKuts/ciphering_cli_tool/issues"
+  },
+  "homepage": "https://github.com/OKuts/ciphering_cli_tool#readme",
+  "devDependencies": {
+    "jest": "^27.3.1"
+  }
+}
